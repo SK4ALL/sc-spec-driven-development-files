@@ -15,7 +15,7 @@ See `requirements.md` for scope and decisions, and `validation.md` for the defin
 
 ## 3. Configure TypeScript
 
-1. Create `tsconfig.json` with ES2022, NodeNext module and moduleResolution, `strict`, `skipLibCheck`, `outDir: dist`, `include: ["src"]`.
+1. Create `tsconfig.json` with ES2022, NodeNext module and moduleResolution, `strict`, `skipLibCheck`, `types: ["node"]` (TypeScript 7 no longer auto-includes `@types/*`), `outDir: dist`, `include: ["src"]`.
 2. Run `npx tsc --noEmit` against an empty `src/` to check the config (a "no inputs" error is expected at this point).
 
 ## 4. Create the Hono app
