@@ -2,7 +2,7 @@
 
 The phase is done, and can be merged, when every check below passes.
 
-**Status:** All checks except the browser check were run on `phase-08-sqlite` on 2026-09-24. A new database file is 0 bytes until the schema is added in Phase 9, which is normal for SQLite; `pragma integrity_check` still reports `ok`. The unwritable-path check fails with `SqliteError: unable to open database file` (`SQLITE_CANTOPEN`) and exit code 1. The browser check still needs to be confirmed by SK.
+**Status:** All checks except the browser check were run on `phase-08-sqlite` on 2026-09-24. A new database file is 0 bytes until the schema is added in Phase 9, which is normal for SQLite; `pragma integrity_check` still reports `ok`. The unwritable-path check fails with `SqliteError: unable to open database file` (`SQLITE_CANTOPEN`) and exit code 1. SK confirmed the browser check.
 
 ## Automated checks
 
@@ -28,7 +28,7 @@ Start each check with no `data/` folder.
 
 - [x] Under both `npm run dev` and `npm start`, `/` returns the same HTML as in Phase 2, `/styles.css` returns `200` with `text/css`, and `/nope.css` returns `404`.
 - [x] **Responsive:** no horizontal scrolling at 320px, 375px, 768px and 1280px, and main content is capped and centered at 1280px (the page shouldn't change in this phase).
-- [ ] Opening `http://localhost:3000/` in a browser shows the styled page, with no console errors and no failed network requests (confirmed by SK).
+- [x] Opening `http://localhost:3000/` in a browser shows the styled page, with no console errors and no failed network requests (confirmed by SK).
 
 ## Scope checks
 
