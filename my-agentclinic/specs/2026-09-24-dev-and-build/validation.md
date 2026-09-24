@@ -2,7 +2,7 @@
 
 The phase is done, and can be merged, when every check below passes.
 
-**Status:** All checks except the browser check were run on `phase-02-dev-and-build` on 2026-09-24. The responsive checks were run under `npm start` in headless Chrome, using a same-origin iframe for phone widths. The browser check still needs to be confirmed by SK.
+**Status:** All checks except the browser check were run on `phase-02-dev-and-build` on 2026-09-24. The responsive checks were run under `npm start` in headless Chrome, using a same-origin iframe for phone widths. SK confirmed the browser check under `npm start`.
 
 ## Automated checks
 
@@ -34,7 +34,7 @@ The page shouldn't change in this phase. Under `npm start`, recheck it at each w
 - [x] **320px and 375px (phone):** no horizontal scrolling; text wraps rather than being clipped.
 - [x] **768px (tablet):** no horizontal scrolling.
 - [x] **1280px (desktop):** no horizontal scrolling; main content is capped and centered.
-- [ ] Opening `http://localhost:3000/` in a browser under `npm start` shows the styled page, with no console errors and no failed network requests (confirmed by SK).
+- [x] Opening `http://localhost:3000/` in a browser under `npm start` shows the styled page, with no console errors and no failed network requests (confirmed by SK).
 
 ## Scope checks
 
