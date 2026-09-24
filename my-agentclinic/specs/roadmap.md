@@ -4,15 +4,17 @@ Implementation order, in nano-sized phases. Each phase is one small, visible cha
 
 Every phase that adds or changes UI must be responsive when it ships, following the rules in `tech-stack.md` (Responsive design), and checked at phone, tablet, and desktop widths.
 
+Phases marked ✅ are done; 🟡 means partly done. See the linked feature spec for details.
+
 ## Foundation
 
-1. Install Hono and `@hono/node-server`; a server that returns "Hello, AgentClinic" at `/`.
+1. ✅ Install Hono and `@hono/node-server`; a server that returns "Hello, AgentClinic" at `/`. ([spec](2026-09-24-hono-hello-server/))
 2. Add `npm run dev` (tsx watch mode) and a working `npm run build`.
-3. Add Vitest with one passing test for `/`.
-4. Render `/` with a JSX layout component (HTML shell and title).
-5. Serve a static stylesheet from `public/` and apply basic styling.
-6. Add a site header with the AgentClinic name and nav links.
-7. Add a footer.
+3. ✅ Add Vitest with one passing test for `/`. (Done in Phase 1.)
+4. ✅ Render `/` with a JSX layout component (HTML shell and title). (Done in Phase 1.)
+5. ✅ Serve a static stylesheet from `public/` and apply basic styling. (Done in Phase 1.)
+6. 🟡 Add a site header with the AgentClinic name and nav links. (Header and name done in Phase 1; nav links still to do.)
+7. ✅ Add a footer. (Done in Phase 1.)
 
 ## Database
 

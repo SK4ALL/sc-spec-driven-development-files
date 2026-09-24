@@ -48,4 +48,4 @@ Check at each width with the browser's device toolbar. Headless Chrome can't go 
 ## Merge readiness
 
 - [x] The work is on branches `phase-01-layout` and `phase-01-tests`, in commits that touch only Phase 1 files (`package.json`, `package-lock.json`, `tsconfig.json`, `src/`, `public/`) and this spec directory.
-- [x] `specs/roadmap.md` is unchanged (Phase 1 is still listed as the first Foundation step; the additions pulled in from Phases 3–7 are recorded in `requirements.md`).
+- [x] `specs/roadmap.md` keeps Phase 1 as the first Foundation step, and marks Phases 1, 3, 4, 5 and 7 as done and Phase 6 as partly done (nav links still to do). The additions pulled in from Phases 3–7 are recorded in `requirements.md`.
