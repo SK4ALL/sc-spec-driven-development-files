@@ -1,11 +1,11 @@
-# Plan — Phase 1: Hono "Hello, AgentClinic" server, home page, layout and stylesheet
+# Plan — Phase 1: Hono "Hello, AgentClinic" server, home page, layout, stylesheet and tests
 
 See `requirements.md` for scope and decisions, and `validation.md` for the definition of done.
 
 ## 1. Initialize the project
 
 1. Create `package.json`: name `agentclinic`, `"private": true`, `"type": "module"`.
-2. Do not add any `scripts` yet (they come in Phase 2).
+2. Do not add any `scripts` yet. The `test` script is added in group 9; `dev` and `build` come in Phase 2.
 
 ## 2. Install dependencies
 
@@ -50,16 +50,36 @@ See `requirements.md` for scope and decisions, and `validation.md` for the defin
 
 ## 8. Add a stylesheet, serve it, and link to it
 
-1. Create `public/styles.css` with basic styling: CSS custom properties for colors and fonts, a flex-column body so the footer sits at the bottom, and simple header, main and footer styles.
+1. Create `public/styles.css`, written mobile-first (see `specs/tech-stack.md`, Responsive design):
+   - CSS custom properties for colors, fonts, spacing and a `--gutter` that grows at the `40rem` and `64rem` breakpoints (`min-width` queries only).
+   - A flex-column body (`min-height: 100dvh`) so the footer sits at the bottom on every screen size.
+   - Fluid `h1` and site-name sizes with `clamp()`, `overflow-wrap: break-word`, and `max-width: 100%` on images and media.
+   - Header, main and footer styles: main is full width on phones and capped at `--max-width` and centered on large screens; the header link is at least 44px tall.
 2. Import `serveStatic` from `@hono/node-server/serve-static` in `src/app.tsx`, and register it to serve files from `./public` (so `/styles.css` is served).
 3. Link the stylesheet from the `<head>` in `Layout`: `<link rel="stylesheet" href="/styles.css">`.
 
-## 9. Verify
+## 9. Add Vitest tests
 
-1. Run every check in `validation.md`.
-2. Fix any failures before moving on.
+1. `npm install -D vitest`, and add a `"test": "vitest run"` script to `package.json`.
+2. Create `src/app.test.ts`, which uses `app.request()` (no running server) to check:
+   - `GET /` returns `200` HTML with the doctype, `lang="en"`, title, heading and tagline.
+   - The header, main and footer appear in that order.
+   - The stylesheet is linked.
+   - The responsive viewport meta tag is present.
+   - `/styles.css` is served as `text/css`, uses the `40rem` and `64rem` `min-width` breakpoints, and has no `max-width` media queries (mobile-first).
+   - A missing file returns `404`.
+3. Create `src/views/Layout.test.tsx`, which renders each component to a string and checks:
+   - `Layout` uses its `title` prop and puts `children` inside `<main>`.
+   - `Header`, `Main` and `Footer` each render the expected element.
+4. Run `npm test`, and confirm a test fails when a component is broken on purpose (then restore it).
 
-## 10. Commit and merge prep
+## 10. Verify
+
+1. Run every check in `validation.md`, including the responsive checks at phone (320px and 375px), tablet (768px) and desktop (1280px) widths.
+2. For phone widths, use the browser's device toolbar (or an iframe of that width): headless Chrome can't make a window narrower than 500px.
+3. Fix any failures before moving on.
+
+## 11. Commit and merge prep
 
 1. Make sure `git status` shows only the intended files: `package.json`, `package-lock.json`, `tsconfig.json`, `src/`, `public/`, and this spec directory.
-2. Commit on `phase-01-layout`, then open a PR or merge once validation passes.
+2. Commit on `phase-01-tests` (tests) and `responsive-design` (responsive CSS), then open a PR or merge once validation passes.

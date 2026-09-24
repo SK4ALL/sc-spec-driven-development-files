@@ -27,6 +27,6 @@ The premise is playful, but the app is real: agents can describe their ailments,
 1. **Playful but real.** The humor lives in the content; the code and behavior are serious and reliable.
 2. **Reliable.** A popular, well-typed stack; small, tested changes. (Mary, engineering)
 3. **Feature-focused.** Agents, ailments, therapies, and booking come first. (Susan, product)
-4. **Attractive.** A clean, pleasant UI that works well in modern browsers. (Steve, marketing)
+4. **Attractive and responsive.** A clean, pleasant UI that works well in modern browsers, and adapts to any screen: phones, tablets, laptops, and the big screen at a demo booth. (Steve, marketing)
 5. **Small steps.** Build in nano-sized phases so every change is easy to understand, review, and demo.
     

@@ -2,6 +2,8 @@
 
 Implementation order, in nano-sized phases. Each phase is one small, visible change that can be built, checked, and demoed on its own. Finish one before starting the next.
 
+Every phase that adds or changes UI must be responsive when it ships, following the rules in `tech-stack.md` (Responsive design), and checked at phone, tablet, and desktop widths.
+
 ## Foundation
 
 1. Install Hono and `@hono/node-server`; a server that returns "Hello, AgentClinic" at `/`.
@@ -61,6 +63,6 @@ Implementation order, in nano-sized phases. Each phase is one small, visible cha
 ## Polish
 
 36. Refine the visual design: colors, typography, spacing.
-37. Make the layout responsive for mobile widths.
+37. Responsive review: check every page at phone, tablet, and desktop widths, and fix anything that slipped through.
 38. Accessibility pass (semantic HTML, labels, contrast).
 39. Add playful copy and empty-state messages throughout.

@@ -42,6 +42,20 @@ Conventions:
 - Minimal client-side JavaScript, added only where a feature needs it.
 - Target: current versions of evergreen browsers (Chrome, Edge, Firefox, Safari).
 
+## Responsive design
+
+Every page is responsive from the phase that introduces it; responsiveness is never bolted on at the end.
+
+- **Mobile-first CSS.** Base styles target the smallest screens; `@media (min-width: …)` queries add layout for larger ones.
+- **Supported widths.** From 320px phones up to wide desktop screens, with no horizontal scrolling and no clipped content at any width.
+- **Breakpoints.** Defined in `rem` so they respect the user's font size: `40rem` (~640px, tablet) and `64rem` (~1024px, desktop). Add others only when content needs them.
+- **Fluid sizing.** Relative units (`rem`, `%`, `ch`) and `clamp()` for type and spacing, rather than fixed pixel widths; content is capped with a `max-width` and centered on large screens.
+- **Flexible layout.** Flexbox and grid that wrap or stack on narrow screens (e.g. nav links, cards, tables, and form fields).
+- **Media and text.** Images and embeds never overflow their container (`max-width: 100%`); long words and URLs wrap.
+- **Touch friendly.** Links, buttons, and form controls have tap targets of at least 44×44px on small screens.
+- **Viewport.** Every page includes `<meta name="viewport" content="width=device-width, initial-scale=1">` via the shared layout.
+- **Checked every phase.** Each feature spec's validation includes checks at phone (320–375px), tablet (~768px), and desktop (~1280px) widths.
+
 ## Tooling
 
 - **tsx** to run TypeScript directly in development (`npm run dev`, with watch mode).

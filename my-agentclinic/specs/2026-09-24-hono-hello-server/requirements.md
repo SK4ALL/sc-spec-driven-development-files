@@ -1,10 +1,10 @@
-# Requirements — Phase 1: Hono "Hello, AgentClinic" server, home page, layout and stylesheet
+# Requirements — Phase 1: Hono "Hello, AgentClinic" server, home page, layout, stylesheet and tests
 
 ## Context
 
-This is the first roadmap phase (Foundation, step 1). It started as the smallest visible change: a running Hono server that says hello. It was then extended to cover a JSX layout (with header, main and footer) and a linked stylesheet, so the first demo shows a real, styled page. That pulls in the core of roadmap Phases 4–7; the nav links from Phase 6 are still deferred. Dev scripts, builds and tests still come later, so each step stays easy to demo live (see `specs/mission.md`, principle 5: *Small steps*).
+This is the first roadmap phase (Foundation, step 1). It started as the smallest visible change: a running Hono server that says hello. It was then extended to cover a JSX layout (with header, main and footer) and a linked stylesheet, so the first demo shows a real, styled, responsive page, plus Vitest tests for all of it. That pulls in roadmap Phase 3 and the core of Phases 4–7; the nav links from Phase 6 are still deferred. Dev and build scripts still come later, so each step stays easy to demo live (see `specs/mission.md`, principle 5: *Small steps*).
 
-Stack guidance comes from `specs/tech-stack.md`: TypeScript in strict mode, Node.js LTS, Hono with `@hono/node-server`, server-rendered Hono JSX, and plain CSS served as a static file.
+Stack guidance comes from `specs/tech-stack.md`: TypeScript in strict mode, Node.js LTS, Hono with `@hono/node-server`, server-rendered Hono JSX, plain CSS served as a static file, and Vitest using Hono's `app.request()`. The UI follows the responsive design rules in `specs/tech-stack.md`.
 
 ## Scope
 
@@ -12,20 +12,21 @@ In scope:
 
 - A `package.json` for the `agentclinic` project.
 - Runtime dependencies: `hono`, `@hono/node-server`.
-- Dev dependencies: `typescript`, `@types/node` (so `process.env` type-checks).
+- Dev dependencies: `typescript`, `@types/node` (so `process.env` type-checks), `vitest`.
+- A single `test` script: `vitest run`.
 - A `tsconfig.json`, with Hono JSX enabled.
 - `src/app.tsx`: the Hono app. It serves `public/` as static files, and `GET /` renders the home page through `Layout`.
 - `src/index.ts`: the server entry point, which serves the app.
 - `src/views/Layout.tsx`: the main layout component, built from three subcomponents in `src/views/`: `Header.tsx`, `Main.tsx` and `Footer.tsx`.
-- `public/styles.css`: the site stylesheet, linked from the layout.
+- `public/styles.css`: the site stylesheet, linked from the layout and written mobile-first, so the page works from 320px phones to wide desktops.
+- Tests: `src/app.test.ts` (routes and static files) and `src/views/Layout.test.tsx` (the layout and its subcomponents).
 
 Out of scope, and deferred to the phase shown:
 
 - `npm run dev` / `npm run build` scripts, and `tsx` as a dependency (Phase 2).
-- Vitest and tests (Phase 3).
 - Nav links in the header (Phase 6). The header shows only the AgentClinic name for now.
 - The database (Phase 8+).
-- Polished visual design, responsive tweaks and an accessibility pass (Phases 36–38).
+- Polished visual design, the site-wide responsive review and an accessibility pass (Phases 36–38). The responsive basics are in scope now.
 
 ## Decisions
 
@@ -42,5 +43,16 @@ Out of scope, and deferred to the phase shown:
      - `Main`: a `<main class="site-main">` that renders `children`.
      - `Footer`: a `<footer class="site-footer">` with a short, playful line.
 7. **Stylesheet.** `public/styles.css` is served with `serveStatic({ root: './public' })` from `@hono/node-server/serve-static`, so it's available at `/styles.css`. Node can't `import` CSS without a bundler, so the stylesheet is served and linked rather than imported in code. It uses CSS custom properties for colors, fonts and spacing, and a flex-column body so the footer stays at the bottom. There's no client-side JavaScript.
-8. **Static root.** `./public` is resolved from the working directory, so the server is started from the project root.
-9. **Git hygiene.** `node_modules/` stays git-ignored (it already is). `dist/` is never committed.
+8. **Responsive design.** The page follows `specs/tech-stack.md` (Responsive design) from day one:
+   - The layout always sends the `width=device-width, initial-scale=1` viewport meta tag.
+   - The CSS is mobile-first: base styles fit a 320px screen, and `@media (min-width: 40rem)` / `(min-width: 64rem)` only widen the gutters and spacing. There are no `max-width` media queries.
+   - Main content is full width on phones, and capped at `--max-width` (60rem) and centered on larger screens.
+   - The heading and site name scale with `clamp()`; long words wrap (`overflow-wrap: break-word`); images and media never overflow.
+   - The header's home link is at least 44px tall, so it's easy to tap.
+   - The footer stays at the bottom of the screen (`min-height: 100dvh`, with a `100vh` fallback), even on mobile browsers with collapsing toolbars.
+9. **Static root.** `./public` is resolved from the working directory, so the server is started from the project root.
+10. **Tests.** Vitest runs with no config file; it picks up the JSX settings from `tsconfig.json`. Tests sit next to the code they cover (`*.test.ts` / `*.test.tsx` in `src/`).
+   - Route tests call `app.request()` directly, so no server or port is needed.
+   - Component tests render JSX to a string with `String(await node)` and check the HTML.
+   - Static-file tests rely on the working directory being the project root (see decision 9), which is where `npm test` runs.
+11. **Git hygiene.** `node_modules/` stays git-ignored (it already is). `dist/` is never committed.
