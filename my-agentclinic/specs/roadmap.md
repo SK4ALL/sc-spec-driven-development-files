@@ -9,7 +9,7 @@ Phases marked ✅ are done; 🟡 means partly done. See the linked feature spec 
 ## Foundation
 
 1. ✅ Install Hono and `@hono/node-server`; a server that returns "Hello, AgentClinic" at `/`. ([spec](2026-09-24-hono-hello-server/))
-2. Add `npm run dev` (tsx watch mode) and a working `npm run build`.
+2. ✅ Add `npm run dev` (tsx watch mode) and a working `npm run build`. ([spec](2026-09-24-dev-and-build/))
 3. ✅ Add Vitest with one passing test for `/`. (Done in Phase 1.)
 4. ✅ Render `/` with a JSX layout component (HTML shell and title). (Done in Phase 1.)
 5. ✅ Serve a static stylesheet from `public/` and apply basic styling. (Done in Phase 1.)
