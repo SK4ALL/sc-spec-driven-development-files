@@ -2,7 +2,7 @@
 
 The phase is done, and can be merged, when every check below passes.
 
-**Status:** The original Phase 1 (plain server and minimal home page) was verified on 2026-09-24. The type-check and curl checks were run on `phase-01-hono-hello` (`fe51720`), and SK confirmed the browser check on `main` (`d398dff`). The layout and stylesheet checks were run on `phase-01-layout`, the test checks on `phase-01-tests`, and the responsive checks on `responsive-design` (in headless Chrome, using a same-origin iframe for phone widths). The styled-page browser check still needs to be confirmed by SK.
+**Status:** The original Phase 1 (plain server and minimal home page) was verified on 2026-09-24. The type-check and curl checks were run on `phase-01-hono-hello` (`fe51720`), and SK confirmed the browser check on `main` (`d398dff`). The layout and stylesheet checks were run on `phase-01-layout`, the test checks on `phase-01-tests`, and the responsive checks on `responsive-design` (in headless Chrome, using a same-origin iframe for phone widths). SK confirmed the styled-page browser check on `main` (`e60d604`).
 
 ## Automated checks
 
@@ -19,7 +19,7 @@ The phase is done, and can be merged, when every check below passes.
 - [x] The `<head>` contains `<link rel="stylesheet" href="/styles.css">`.
 - [x] `curl -i http://localhost:3000/styles.css` returns `200 OK` with a `text/css` content type.
 - [x] A missing static file (e.g. `/nope.css`) returns `404`.
-- [ ] Opening `http://localhost:3000/` in a browser shows "AgentClinic" as the tab title, the styled header (with the AgentClinic name), the heading and tagline, and the footer at the bottom of the window, with no console errors and no failed network requests.
+- [x] Opening `http://localhost:3000/` in a browser shows "AgentClinic" as the tab title, the styled header (with the AgentClinic name), the heading and tagline, and the footer at the bottom of the window, with no console errors and no failed network requests.
 - [x] `PORT=4000 npx tsx src/index.ts` serves on port 4000 instead.
 
 ## Responsive checks
