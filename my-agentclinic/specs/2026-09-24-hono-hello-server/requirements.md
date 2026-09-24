@@ -35,24 +35,25 @@ Out of scope, and deferred to the phase shown:
 3. **Split app and entry.** `src/app.tsx` exports `app` and does not start a server, so the Phase 3 tests can import it with `app.request()`. `src/index.ts` is the only file that calls `serve()`.
 4. **Port.** Read from `PORT`, defaulting to `3000`. On startup, log a friendly line with the URL (e.g. `AgentClinic is open at http://localhost:3000`).
 5. **Home page.** `GET /` returns `text/html` via `c.html(<Layout title="AgentClinic">…</Layout>)`. The page content is `<h1>Hello, AgentClinic</h1>`, followed by `<p>A place for AI agents to get relief from their humans.</p>` (from `specs/mission.md`).
-6. **Layout component.** `Layout` takes a `title` prop and `children`, and renders the whole document:
+6. **Layout component.** `Layout` takes a `title` prop and `children` (typed as `export type LayoutProps = PropsWithChildren<{ title: string }>`), and renders the whole document:
    - `<!doctype html>` (emitted with `raw()` from `hono/html`, since JSX can't express a doctype), then `<html lang="en">`.
    - A `<head>` with `<meta charset="utf-8">`, the viewport meta tag, `<title>{title}</title>`, and `<link rel="stylesheet" href="/styles.css">`.
    - A `<body>` made of three subcomponents:
      - `Header`: a `<header class="site-header">` with the AgentClinic name, linking to `/`.
-     - `Main`: a `<main class="site-main">` that renders `children`.
+     - `Main`: a `<main class="site-main">` that renders `children` (typed as `export type MainProps = PropsWithChildren`).
      - `Footer`: a `<footer class="site-footer">` with a short, playful line.
-7. **Stylesheet.** `public/styles.css` is served with `serveStatic({ root: './public' })` from `@hono/node-server/serve-static`, so it's available at `/styles.css`. Node can't `import` CSS without a bundler, so the stylesheet is served and linked rather than imported in code. It uses CSS custom properties for colors, fonts and spacing, and a flex-column body so the footer stays at the bottom. There's no client-side JavaScript.
-8. **Responsive design.** The page follows `specs/tech-stack.md` (Responsive design) from day one:
+7. **Props types.** Following `specs/tech-stack.md`, each component's props are an exported, named TypeScript `type` declared above the component, not written inline. `Header` and `Footer` take no props, so they have no props type.
+8. **Stylesheet.** `public/styles.css` is served with `serveStatic({ root: './public' })` from `@hono/node-server/serve-static`, so it's available at `/styles.css`. Node can't `import` CSS without a bundler, so the stylesheet is served and linked rather than imported in code. It uses CSS custom properties for colors, fonts and spacing, and a flex-column body so the footer stays at the bottom. There's no client-side JavaScript.
+9. **Responsive design.** The page follows `specs/tech-stack.md` (Responsive design) from day one:
    - The layout always sends the `width=device-width, initial-scale=1` viewport meta tag.
    - The CSS is mobile-first: base styles fit a 320px screen, and `@media (min-width: 40rem)` / `(min-width: 64rem)` only widen the gutters and spacing. There are no `max-width` media queries.
    - Main content is full width on phones, and capped at `--max-width` (60rem) and centered on larger screens.
    - The heading and site name scale with `clamp()`; long words wrap (`overflow-wrap: break-word`); images and media never overflow.
    - The header's home link is at least 44px tall, so it's easy to tap.
    - The footer stays at the bottom of the screen (`min-height: 100dvh`, with a `100vh` fallback), even on mobile browsers with collapsing toolbars.
-9. **Static root.** `./public` is resolved from the working directory, so the server is started from the project root.
-10. **Tests.** Vitest runs with no config file; it picks up the JSX settings from `tsconfig.json`. Tests sit next to the code they cover (`*.test.ts` / `*.test.tsx` in `src/`).
+10. **Static root.** `./public` is resolved from the working directory, so the server is started from the project root.
+11. **Tests.** Vitest runs with no config file; it picks up the JSX settings from `tsconfig.json`. Tests sit next to the code they cover (`*.test.ts` / `*.test.tsx` in `src/`).
    - Route tests call `app.request()` directly, so no server or port is needed.
    - Component tests render JSX to a string with `String(await node)` and check the HTML.
-   - Static-file tests rely on the working directory being the project root (see decision 9), which is where `npm test` runs.
-11. **Git hygiene.** `node_modules/` stays git-ignored (it already is). `dist/` is never committed.
+   - Static-file tests rely on the working directory being the project root (see decision 10), which is where `npm test` runs.
+12. **Git hygiene.** `node_modules/` stays git-ignored (it already is). `dist/` is never committed.
