@@ -2,12 +2,12 @@
 
 The phase is done, and can be merged, when every check below passes.
 
-**Status:** The original Phase 1 (plain server and minimal home page) was verified on 2026-09-24. The type-check and curl checks were run on `phase-01-hono-hello` (`fe51720`), and SK confirmed the browser check on `main` (`d398dff`). The layout and stylesheet checks were run on `phase-01-layout`, and the test checks on `phase-01-tests`. The styled-page browser check still needs to be confirmed by SK.
+**Status:** The original Phase 1 (plain server and minimal home page) was verified on 2026-09-24. The type-check and curl checks were run on `phase-01-hono-hello` (`fe51720`), and SK confirmed the browser check on `main` (`d398dff`). The layout and stylesheet checks were run on `phase-01-layout`, the test checks on `phase-01-tests`, and the responsive checks on `responsive-design` (in headless Chrome, using a same-origin iframe for phone widths). The styled-page browser check still needs to be confirmed by SK.
 
 ## Automated checks
 
 - [x] `npx tsc --noEmit` exits with code 0 and no errors (strict mode, JSX enabled), including the test files.
-- [x] `npm test` passes: 9 tests in `src/app.test.ts` and `src/views/Layout.test.tsx`.
+- [x] `npm test` passes: 11 tests in `src/app.test.ts` and `src/views/Layout.test.tsx`, including the viewport meta tag and the mobile-first breakpoints.
 - [x] Breaking a component on purpose (e.g. turning `<footer>` into a `<div>`) makes `npm test` fail, and restoring it makes the tests pass again.
 
 ## Manual checks
@@ -21,6 +21,18 @@ The phase is done, and can be merged, when every check below passes.
 - [x] A missing static file (e.g. `/nope.css`) returns `404`.
 - [ ] Opening `http://localhost:3000/` in a browser shows "AgentClinic" as the tab title, the styled header (with the AgentClinic name), the heading and tagline, and the footer at the bottom of the window, with no console errors and no failed network requests.
 - [x] `PORT=4000 npx tsx src/index.ts` serves on port 4000 instead.
+
+## Responsive checks
+
+Check at each width with the browser's device toolbar. Headless Chrome can't go below a 500px window, so use a same-origin iframe for phone widths.
+
+- [x] **320px (small phone):** no horizontal scrolling (`scrollWidth` equals `clientWidth`); the tagline and footer text wrap instead of being clipped; the header, heading and footer are all readable.
+- [x] **375px (phone):** same as 320px.
+- [x] **768px (tablet):** no horizontal scrolling; the gutters are wider than on phones.
+- [x] **1280px (desktop):** no horizontal scrolling; main content is capped at 60rem and centered; the header and footer stretch full width.
+- [x] At every width, the footer sits at the bottom of the window when the content is short.
+- [x] The header's AgentClinic link is at least 44px tall.
+- [x] The CSS has only `min-width` media queries, at `40rem` and `64rem`.
 - [x] Stopping the server (Ctrl+C) exits cleanly.
 
 ## Scope checks

@@ -1,3 +1,10 @@
+/*
+ * Mobile-first: base styles target the smallest screens (320px and up).
+ * Breakpoints (rem, so they respect the user's font size):
+ *   40rem (~640px)  tablet
+ *   64rem (~1024px) desktop
+ */
+
 :root {
   --color-bg: #f7f9fc;
   --color-surface: #ffffff;
@@ -6,32 +13,73 @@
   --color-accent: #0f766e;
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --space: 1rem;
+  --gutter: var(--space);
   --max-width: 60rem;
+  --tap-target: 2.75rem; /* 44px */
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --gutter: calc(var(--space) * 1.5);
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: calc(var(--space) * 2);
+  }
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 1.25rem + 2.5vw, 2.75rem);
+  line-height: 1.2;
+  margin: 0 0 var(--space);
 }
 
 .site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space);
   background: var(--color-accent);
-  padding: var(--space) calc(var(--space) * 1.5);
+  padding: calc(var(--space) * 0.5) var(--gutter);
 }
 
 .site-name {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
   color: #ffffff;
-  font-size: 1.25rem;
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
   font-weight: 700;
   text-decoration: none;
 }
@@ -41,7 +89,13 @@ body {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: calc(var(--space) * 2) calc(var(--space) * 1.5);
+  padding: calc(var(--space) * 1.5) var(--gutter);
+}
+
+@media (min-width: 40rem) {
+  .site-main {
+    padding-block: calc(var(--space) * 2.5);
+  }
 }
 
 .site-footer {
@@ -49,7 +103,7 @@ body {
   border-top: 1px solid #e5e7eb;
   color: var(--color-muted);
   font-size: 0.875rem;
-  padding: var(--space) calc(var(--space) * 1.5);
+  padding: var(--space) var(--gutter);
   text-align: center;
 }
 

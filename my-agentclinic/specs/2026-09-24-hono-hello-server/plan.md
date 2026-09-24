@@ -50,7 +50,11 @@ See `requirements.md` for scope and decisions, and `validation.md` for the defin
 
 ## 8. Add a stylesheet, serve it, and link to it
 
-1. Create `public/styles.css` with basic styling: CSS custom properties for colors and fonts, a flex-column body so the footer sits at the bottom, and simple header, main and footer styles.
+1. Create `public/styles.css`, written mobile-first (see `specs/tech-stack.md`, Responsive design):
+   - CSS custom properties for colors, fonts, spacing and a `--gutter` that grows at the `40rem` and `64rem` breakpoints (`min-width` queries only).
+   - A flex-column body (`min-height: 100dvh`) so the footer sits at the bottom on every screen size.
+   - Fluid `h1` and site-name sizes with `clamp()`, `overflow-wrap: break-word`, and `max-width: 100%` on images and media.
+   - Header, main and footer styles: main is full width on phones and capped at `--max-width` and centered on large screens; the header link is at least 44px tall.
 2. Import `serveStatic` from `@hono/node-server/serve-static` in `src/app.tsx`, and register it to serve files from `./public` (so `/styles.css` is served).
 3. Link the stylesheet from the `<head>` in `Layout`: `<link rel="stylesheet" href="/styles.css">`.
 
@@ -61,7 +65,9 @@ See `requirements.md` for scope and decisions, and `validation.md` for the defin
    - `GET /` returns `200` HTML with the doctype, `lang="en"`, title, heading and tagline.
    - The header, main and footer appear in that order.
    - The stylesheet is linked.
-   - `/styles.css` is served as `text/css`, and a missing file returns `404`.
+   - The responsive viewport meta tag is present.
+   - `/styles.css` is served as `text/css`, uses the `40rem` and `64rem` `min-width` breakpoints, and has no `max-width` media queries (mobile-first).
+   - A missing file returns `404`.
 3. Create `src/views/Layout.test.tsx`, which renders each component to a string and checks:
    - `Layout` uses its `title` prop and puts `children` inside `<main>`.
    - `Header`, `Main` and `Footer` each render the expected element.
@@ -69,10 +75,11 @@ See `requirements.md` for scope and decisions, and `validation.md` for the defin
 
 ## 10. Verify
 
-1. Run every check in `validation.md`.
-2. Fix any failures before moving on.
+1. Run every check in `validation.md`, including the responsive checks at phone (320px and 375px), tablet (768px) and desktop (1280px) widths.
+2. For phone widths, use the browser's device toolbar (or an iframe of that width): headless Chrome can't make a window narrower than 500px.
+3. Fix any failures before moving on.
 
 ## 11. Commit and merge prep
 
 1. Make sure `git status` shows only the intended files: `package.json`, `package-lock.json`, `tsconfig.json`, `src/`, `public/`, and this spec directory.
-2. Commit on `phase-01-tests`, then open a PR or merge once validation passes.
+2. Commit on `phase-01-tests` (tests) and `responsive-design` (responsive CSS), then open a PR or merge once validation passes.
