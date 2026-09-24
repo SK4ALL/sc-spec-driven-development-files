@@ -18,7 +18,7 @@ Phases marked ✅ are done; 🟡 means partly done. See the linked feature spec 
 
 ## Database
 
-8. Install better-sqlite3; open `data/agentclinic.db` on startup and git-ignore `data/`.
+8. ✅ Install better-sqlite3; open `data/agentclinic.db` on startup and git-ignore `data/`. ([spec](2026-09-24-sqlite-database/))
 9. Apply a SQL schema file on startup (starting with an empty `agents` table).
 10. Use an in-memory database in tests.
 
