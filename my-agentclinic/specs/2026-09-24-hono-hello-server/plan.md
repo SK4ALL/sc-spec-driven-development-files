@@ -1,11 +1,11 @@
-# Plan — Phase 1: Hono "Hello, AgentClinic" server, home page, layout and stylesheet
+# Plan — Phase 1: Hono "Hello, AgentClinic" server, home page, layout, stylesheet and tests
 
 See `requirements.md` for scope and decisions, and `validation.md` for the definition of done.
 
 ## 1. Initialize the project
 
 1. Create `package.json`: name `agentclinic`, `"private": true`, `"type": "module"`.
-2. Do not add any `scripts` yet (they come in Phase 2).
+2. Do not add any `scripts` yet. The `test` script is added in group 9; `dev` and `build` come in Phase 2.
 
 ## 2. Install dependencies
 
@@ -54,12 +54,25 @@ See `requirements.md` for scope and decisions, and `validation.md` for the defin
 2. Import `serveStatic` from `@hono/node-server/serve-static` in `src/app.tsx`, and register it to serve files from `./public` (so `/styles.css` is served).
 3. Link the stylesheet from the `<head>` in `Layout`: `<link rel="stylesheet" href="/styles.css">`.
 
-## 9. Verify
+## 9. Add Vitest tests
+
+1. `npm install -D vitest`, and add a `"test": "vitest run"` script to `package.json`.
+2. Create `src/app.test.ts`, which uses `app.request()` (no running server) to check:
+   - `GET /` returns `200` HTML with the doctype, `lang="en"`, title, heading and tagline.
+   - The header, main and footer appear in that order.
+   - The stylesheet is linked.
+   - `/styles.css` is served as `text/css`, and a missing file returns `404`.
+3. Create `src/views/Layout.test.tsx`, which renders each component to a string and checks:
+   - `Layout` uses its `title` prop and puts `children` inside `<main>`.
+   - `Header`, `Main` and `Footer` each render the expected element.
+4. Run `npm test`, and confirm a test fails when a component is broken on purpose (then restore it).
+
+## 10. Verify
 
 1. Run every check in `validation.md`.
 2. Fix any failures before moving on.
 
-## 10. Commit and merge prep
+## 11. Commit and merge prep
 
 1. Make sure `git status` shows only the intended files: `package.json`, `package-lock.json`, `tsconfig.json`, `src/`, `public/`, and this spec directory.
-2. Commit on `phase-01-layout`, then open a PR or merge once validation passes.
+2. Commit on `phase-01-tests`, then open a PR or merge once validation passes.
