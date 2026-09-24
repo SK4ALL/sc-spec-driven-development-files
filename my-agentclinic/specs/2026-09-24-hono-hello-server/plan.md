@@ -45,8 +45,9 @@ See `requirements.md` for scope and decisions, and `validation.md` for the defin
    - `Header.tsx`: a `<header>` holding the AgentClinic name as a link to `/`.
    - `Main.tsx`: a `<main>` that renders its `children`.
    - `Footer.tsx`: a `<footer>` with a short, playful line.
-4. Create `src/views/Layout.tsx`, which renders the full document: `<!doctype html>`, `<html lang="en">`, a `<head>` (charset, viewport, `<title>`), and a `<body>` containing `<Header />`, `<Main>{children}</Main>`, `<Footer />`. It takes a `title` prop.
-5. Render the home page through `Layout` in `src/app.tsx`, with the same `<h1>` and tagline as group 6, replacing the inline template string.
+4. Declare props as exported types above each component (e.g. `export type MainProps = PropsWithChildren`), not inline in the signature.
+5. Create `src/views/Layout.tsx`, which renders the full document: `<!doctype html>`, `<html lang="en">`, a `<head>` (charset, viewport, `<title>`), and a `<body>` containing `<Header />`, `<Main>{children}</Main>`, `<Footer />`. It takes a `title` prop.
+6. Render the home page through `Layout` in `src/app.tsx`, with the same `<h1>` and tagline as group 6, replacing the inline template string.
 
 ## 8. Add a stylesheet, serve it, and link to it
 

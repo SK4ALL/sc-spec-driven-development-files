@@ -39,6 +39,7 @@ Conventions:
 
 - Server-rendered HTML pages via Hono JSX components.
 - Plain, modern CSS (custom properties, flexbox/grid) served as a static file.
+- Component props are declared as a named, exported TypeScript `type` (`<Component>Props`) right above the component, never inline in the function signature. Use `PropsWithChildren` from `hono/jsx` for components that take children. Components with no props don't get a props type.
 - Minimal client-side JavaScript, added only where a feature needs it.
 - Target: current versions of evergreen browsers (Chrome, Edge, Firefox, Safari).
 

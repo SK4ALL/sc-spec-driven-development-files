@@ -42,6 +42,7 @@ Check at each width with the browser's device toolbar. Headless Chrome can't go 
 - [x] `scripts` contains only `test` (`vitest run`); there's no `dev` or `build` script yet (Phase 2).
 - [x] `src/app.tsx` exports `app` and does not start a server. Only `src/index.ts` calls `serve()`.
 - [x] `Layout` is built from exactly three subcomponents (`Header`, `Main`, `Footer`) in `src/views/`.
+- [x] Components that take props use an exported, named props type (`LayoutProps`, `MainProps`), with no inline props types in function signatures.
 - [x] The header has no nav links yet (Phase 6), and there's no client-side JavaScript.
 - [x] Neither `dist/` nor `node_modules/` is committed.
 

@@ -4,7 +4,7 @@ import { Header } from './Header.js'
 import { Main } from './Main.js'
 import { Footer } from './Footer.js'
 
-type LayoutProps = PropsWithChildren<{ title: string }>
+export type LayoutProps = PropsWithChildren<{ title: string }>
 
 export const Layout = ({ title, children }: LayoutProps) => (
   <>
